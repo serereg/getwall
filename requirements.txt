@@ -1,0 +1,11 @@
+dependency-injector
+fastapi
+uvicorn
+aioredis
+pytest-httpx
+
+# For testing:
+pytest
+pytest-asyncio
+pytest-cov
+httpx
