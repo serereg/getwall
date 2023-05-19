@@ -1,11 +1,16 @@
-FROM python:3.10-buster
+FROM python:3.10.11-buster
 
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /code
-COPY ./requirements-lock.txt /code/
-RUN pip install -r requirements-lock.txt
+RUN pip install poetry>=1.1.13 \
+    && poetry config virtualenvs.create false
 
-COPY . /code/
+WORKDIR /getwall
+
+COPY ["pyproject.toml", "poetry.lock", "/getwall/"]
+
+RUN poetry install --no-root --no-interaction
+
+COPY . /getwall/
 
 CMD ["uvicorn", "getwall.application:app", "--host", "0.0.0.0", "--reload"]
